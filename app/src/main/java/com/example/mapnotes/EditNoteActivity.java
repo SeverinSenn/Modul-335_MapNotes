@@ -13,6 +13,7 @@ import android.os.IBinder;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -55,12 +56,26 @@ public class EditNoteActivity<connection> extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void Delete(View view){
+        DataService.deleteItem(EditNoteViewModel.getLatLng());
+        Intent intent = new Intent(this, MapsActivity.class);
+        startActivity(intent);
+    }
+
     public ServiceConnection connection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
             DataService.LocalBinder binder = (DataService.LocalBinder) service;
             DataService = binder.getService();
-            EditNoteViewModel = DataService.getItem(EditNoteViewModel.getLatLng());
+            LatLng latLng = EditNoteViewModel.getLatLng();
+            EditNoteViewModel = DataService.getItem(latLng);
+
+            if(EditNoteViewModel == null){
+                EditNoteViewModel = new EditNoteViewModel();
+                EditNoteViewModel.setLatLng(latLng);
+                Button deletebutton = (Button) findViewById(R.id.delete);
+                deletebutton.setVisibility(View.GONE);
+            }
 
             EditText beschreibungEditText = (EditText) findViewById(R.id.beschreibung);
             beschreibungEditText.addTextChangedListener(new EditTextTextWatcher(EditNoteViewModel,"Beschreibung"));
@@ -68,7 +83,10 @@ public class EditNoteActivity<connection> extends AppCompatActivity {
 
             EditText titleEditText = (EditText) findViewById(R.id.title);
             titleEditText.addTextChangedListener(new EditTextTextWatcher(EditNoteViewModel,"title"));
-            titleEditText.setText(EditNoteViewModel.getTitle());
+
+
+
+
         }
         @Override
         public void onServiceDisconnected(ComponentName arg0) {}

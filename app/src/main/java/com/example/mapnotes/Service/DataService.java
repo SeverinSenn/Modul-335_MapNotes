@@ -36,9 +36,16 @@ public class DataService extends Service {
         list.add(editNoteViewModel);
     }
 
+    public void deleteItem(LatLng latlng){
+        EditNoteViewModel res = getItem(latlng);
+        if(res != null){
+            list.remove(res);
+        }
+        savedata();
+    }
+
     public EditNoteViewModel getItem(LatLng latlng){
-        EditNoteViewModel res = new EditNoteViewModel();
-        res.setLatLng(latlng);
+        EditNoteViewModel res = null;
         for (EditNoteViewModel item: list) {
             if(item.getLatLng().latitude == latlng.latitude && item.getLatLng().longitude == latlng.longitude){
                 res = item;
@@ -46,10 +53,14 @@ public class DataService extends Service {
         }
         return res;
     }
-    @Override
-    public boolean onUnbind(Intent intent) {
+
+    private void savedata(){
         String json = new Gson().toJson(list);
         Prefs.edit().putString(MapsActivity.PrefsEditNoteListKey,json).apply();
+    }
+    @Override
+    public boolean onUnbind(Intent intent) {
+       savedata();
         return true;
     }
     @Override
