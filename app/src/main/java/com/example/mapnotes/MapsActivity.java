@@ -23,6 +23,7 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.view.View;
 
 import com.example.mapnotes.Service.DataService;
@@ -62,21 +63,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        LocationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
-        LocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, new LocationListener() {
-            @Override
-            public void onLocationChanged(@NonNull Location location) {
-                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-                MarkerOptions markerOptions = new MarkerOptions();
-                markerOptions.position(latLng);
-                markerOptions.title("Current Position");
-                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
-                mMap.addMarker(markerOptions);
-
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,11));
-            }
-        });
     }
 
     @Override
