@@ -83,9 +83,7 @@ public class EditNoteActivity<connection> extends AppCompatActivity {
 
             EditText titleEditText = (EditText) findViewById(R.id.title);
             titleEditText.addTextChangedListener(new EditTextTextWatcher(EditNoteViewModel,"title"));
-
-
-
+            titleEditText.setText(EditNoteViewModel.getTitle());
 
         }
         @Override

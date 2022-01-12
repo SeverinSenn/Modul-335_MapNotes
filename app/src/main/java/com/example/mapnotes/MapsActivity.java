@@ -1,10 +1,17 @@
 package com.example.mapnotes;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -13,16 +20,19 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.view.View;
 
 import com.example.mapnotes.Service.DataService;
+import com.example.mapnotes.Service.NotificationService;
 import com.example.mapnotes.ViewModel.EditNoteViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -39,6 +49,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private DataService DataService;
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
+    private LocationManager LocationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +62,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        LocationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+        LocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, new LocationListener() {
+            @Override
+            public void onLocationChanged(@NonNull Location location) {
+                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                MarkerOptions markerOptions = new MarkerOptions();
+                markerOptions.position(latLng);
+                markerOptions.title("Current Position");
+                markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA));
+                mMap.addMarker(markerOptions);
+
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,11));
+            }
+        });
     }
+
     @Override
     protected void onStart() {
         super.onStart();
         Intent intentDataService = new Intent(this, DataService.class);
         bindService(intentDataService, dataServiceConnection, Context.BIND_AUTO_CREATE);
     }
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -68,9 +96,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         StartEditNoteActivity(mMap.getCameraPosition().target);
     }
 
-    public void StartEditNoteActivity(LatLng latLng){
+    public void StartEditNoteActivity(LatLng latLng) {
         Intent intent = new Intent(this, EditNoteActivity.class);
-        intent.putExtra(LatLongKey,latLng);
+        intent.putExtra(LatLongKey, latLng);
         startActivity(intent);
     }
 
@@ -81,13 +109,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
+        mMap.setMyLocationEnabled(true);
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                if(marker.getTitle() == null){
+                String value = marker.getTitle();
+                if(value == null || value.isEmpty()){
                     StartEditNoteActivity(marker.getPosition());
                 }else{
                     marker.showInfoWindow();
@@ -108,6 +137,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 StartEditNoteActivity(latLng);
             }
         });
+
     }
 
     private void setMarker(){
