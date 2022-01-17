@@ -29,7 +29,6 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.example.mapnotes.MapsActivity;
 import com.example.mapnotes.R;
-import com.example.mapnotes.Util.EditTextTextWatcher;
 import com.example.mapnotes.ViewModel.EditNoteViewModel;
 import com.google.android.gms.maps.model.LatLng;
 

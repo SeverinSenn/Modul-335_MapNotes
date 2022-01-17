@@ -18,7 +18,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.mapnotes.Service.DataService;
-import com.example.mapnotes.Util.EditTextTextWatcher;
 import com.example.mapnotes.ViewModel.EditNoteViewModel;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -69,21 +68,43 @@ public class EditNoteActivity<connection> extends AppCompatActivity {
             DataService.LocalBinder binder = (DataService.LocalBinder) service;
             DataService = binder.getService();
             LatLng latLng = EditNoteViewModel.getLatLng();
-            EditNoteViewModel = DataService.getItem(latLng);
+            EditNoteViewModel item =  DataService.getItem(latLng);
 
-            if(EditNoteViewModel == null){
-                EditNoteViewModel = new EditNoteViewModel();
+            if(item == null){
                 EditNoteViewModel.setLatLng(latLng);
                 Button deletebutton = (Button) findViewById(R.id.delete);
                 deletebutton.setVisibility(View.GONE);
+            }else{
+                EditNoteViewModel = item;
             }
 
+
             EditText beschreibungEditText = (EditText) findViewById(R.id.beschreibung);
-            beschreibungEditText.addTextChangedListener(new EditTextTextWatcher(EditNoteViewModel,"Beschreibung"));
+            beschreibungEditText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+                @Override
+                public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                    EditNoteViewModel.setBeschreibung(s.toString());
+                }
+                @Override
+                public void afterTextChanged(Editable editable) {}
+            });
             beschreibungEditText.setText(EditNoteViewModel.getBeschreibung());
 
             EditText titleEditText = (EditText) findViewById(R.id.title);
-            titleEditText.addTextChangedListener(new EditTextTextWatcher(EditNoteViewModel,"title"));
+            titleEditText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int i, int i1, int i2) {
+                    EditNoteViewModel.setTitle(s.toString());
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {}
+            });
             titleEditText.setText(EditNoteViewModel.getTitle());
 
         }
