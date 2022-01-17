@@ -29,6 +29,7 @@ import android.view.View;
 import com.example.mapnotes.Service.DataService;
 import com.example.mapnotes.Service.NotificationService;
 import com.example.mapnotes.ViewModel.EditNoteViewModel;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -51,10 +52,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
     private LocationManager LocationManager;
+    private LatLng LatLng;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        Object extras = intent.getExtras();
+        if(extras != null){
+            LatLng = (LatLng) intent.getExtras().get(LatLongKey);
+        }
+
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -95,6 +104,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+
+
+
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
         mMap.setMyLocationEnabled(true);
 
@@ -123,6 +135,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 StartEditNoteActivity(latLng);
             }
         });
+
+        if(LatLng != null){
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(LatLng,2));
+        }
 
     }
 

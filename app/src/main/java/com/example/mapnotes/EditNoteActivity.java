@@ -53,6 +53,7 @@ public class EditNoteActivity<connection> extends AppCompatActivity {
     public void Save(View view){
         DataService.AddItem(EditNoteViewModel);
         Intent intent = new Intent(this, MapsActivity.class);
+        intent.putExtra(MapsActivity.LatLongKey,EditNoteViewModel.getLatLng());
         startActivity(intent);
     }
 
