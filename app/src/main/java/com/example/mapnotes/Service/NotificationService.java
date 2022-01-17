@@ -42,6 +42,18 @@ public class NotificationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,"Notification", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager manger = getSystemService(NotificationManager.class);
+            manger.createNotificationChannel(channel);
+        }
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext(), CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setContentTitle("Start ForgroundService");
+        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(getBaseContext());
+        this.startForeground(1,builder.build());
+
+
 
         Intent intentDataService = new Intent(this, DataService.class);
         bindService(intentDataService, connection, Context.BIND_AUTO_CREATE);
@@ -53,11 +65,6 @@ public class NotificationService extends Service {
         lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 420000, 50, locationListener);
         lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 420000, 50, locationListener);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID,"Notification", NotificationManager.IMPORTANCE_DEFAULT);
-            NotificationManager manger = getSystemService(NotificationManager.class);
-            manger.createNotificationChannel(channel);
-        }
 
 
         return START_NOT_STICKY;
