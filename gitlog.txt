@@ -1,0 +1,77 @@
+commit 3dc5c6a3c61a06db35f5db556c7b79f8a60d14d0
+Author: Severin Senn <50795012+SeverinSenn@users.noreply.github.com>
+Date:   Mon Jan 17 10:24:51 2022 +0100
+
+    add Website
+
+commit 2f1778b989f177b07c543b9689c4fb6db02fb9bb
+Author: Severin Senn <50795012+SeverinSenn@users.noreply.github.com>
+Date:   Mon Jan 17 09:19:53 2022 +0100
+
+    fixed viewModel bug
+
+commit 7bf8bbb96fe532e6794ab36abd27b5979c4afa9b
+Author: Severin Senn <50795012+SeverinSenn@users.noreply.github.com>
+Date:   Mon Jan 17 08:50:48 2022 +0100
+
+    add Custom Icon
+
+commit 9b73930f5b093667211118865ffc044addf71ff6
+Author: Severin Senn <50795012+SeverinSenn@users.noreply.github.com>
+Date:   Mon Jan 17 08:24:11 2022 +0100
+
+    Service StartForground
+
+commit b79f122b9e5e1f8a26ed5980b152fcabaf4c527b
+Author: Severin Senn <50795012+SeverinSenn@users.noreply.github.com>
+Date:   Mon Jan 17 08:23:53 2022 +0100
+
+    add Camera Move
+
+commit ca8d70fa15189224d1980ce4cbf0ef78dacde638
+Author: Severin Senn <50795012+SeverinSenn@users.noreply.github.com>
+Date:   Sun Jan 16 17:25:29 2022 +0100
+
+    add Notification when near 20m of Note
+
+commit 416937c6e0a0f0506575ca3d807750009a66e64e
+Author: Severin Senn <50795012+SeverinSenn@users.noreply.github.com>
+Date:   Wed Jan 12 16:39:10 2022 +0100
+
+    add Location
+
+commit 19e7e1c36c530c90fc402cb8e26aa41030592c59
+Author: Severin Senn <50795012+SeverinSenn@users.noreply.github.com>
+Date:   Wed Jan 12 15:41:40 2022 +0100
+
+    add Notification
+
+commit a6c691248abd72912f747581c884d7dd91b72a4d
+Author: Severin Senn <50795012+SeverinSenn@users.noreply.github.com>
+Date:   Wed Jan 12 11:46:13 2022 +0100
+
+    add Hint
+
+commit feb6084a2e9ddf8814162f2e443e7c2e1574d4eb
+Author: Severin Senn <50795012+SeverinSenn@users.noreply.github.com>
+Date:   Wed Jan 12 11:42:36 2022 +0100
+
+    add Delete Marker
+
+commit 69a62e5c0708e827ce43950596f7af1b6519dd2b
+Author: Severin Senn <50795012+SeverinSenn@users.noreply.github.com>
+Date:   Wed Jan 12 11:23:42 2022 +0100
+
+    add EditNote Editing
+
+commit 048015b773b1ce5cd3863bb6767f8a474b48e4b0
+Author: Severin Senn <50795012+SeverinSenn@users.noreply.github.com>
+Date:   Mon Jan 10 15:36:02 2022 +0100
+
+    add Edit Note activity
+
+commit ab2bc9ec1da71c4b63a09144645bbcba0cc36d60
+Author: Severin Senn <50795012+SeverinSenn@users.noreply.github.com>
+Date:   Mon Jan 10 14:35:15 2022 +0100
+
+    init project
