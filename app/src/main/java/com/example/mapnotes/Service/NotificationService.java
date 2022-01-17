@@ -48,7 +48,7 @@ public class NotificationService extends Service {
             manger.createNotificationChannel(channel);
         }
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext(), CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_background)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Start ForgroundService");
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(getBaseContext());
         this.startForeground(1,builder.build());
@@ -79,7 +79,7 @@ public class NotificationService extends Service {
                 double dis = distance(latLngitem.latitude,location.getLatitude(),latLngitem.longitude,location.getLongitude(),0,0);
                 if(dis <= 20){
                     NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext(), CHANNEL_ID)
-                            .setSmallIcon(R.drawable.ic_launcher_background)
+                            .setSmallIcon(R.mipmap.ic_launcher)
                             .setContentTitle(item.getTitle())
                             .setContentText(item.getBeschreibung());
                     NotificationManagerCompat managerCompat = NotificationManagerCompat.from(getBaseContext());

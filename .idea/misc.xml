@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/dev/M335_MapNotes/app/src/main/res/drawable/ic_launcher_background.xml" value="0.15" />
         <entry key="..\:/dev/M335_MapNotes/app/src/main/res/layout/activity_edit_note.xml" value="0.264" />
         <entry key="..\:/dev/M335_MapNotes/app/src/main/res/layout/activity_main.xml" value="0.152" />
         <entry key="..\:/dev/M335_MapNotes/app/src/main/res/layout/activity_maps.xml" value="0.16799999999999998" />
